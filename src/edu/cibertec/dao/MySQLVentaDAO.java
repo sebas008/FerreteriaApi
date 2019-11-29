@@ -16,7 +16,7 @@ import edu.cibertec.utils.MySQLConexion;
 public class MySQLVentaDAO implements VentaDAO
 {
 	@Override
-	public int transaccion(VentaDTO venta, ArrayList<CarritoDTO> detalleVenta) 
+	public int transaccion(VentaDTO venta) 
 	{
 		int ok = 0;
 		Connection con = null;
@@ -46,7 +46,7 @@ public class MySQLVentaDAO implements VentaDAO
 			 */
 			String sql1 = "insert into tb_detalle_venta values(?, ?, ?, ?);";
 			
-			for(CarritoDTO c : detalleVenta)
+			for(CarritoDTO c : venta.getDetalle())
 			{
 				pst1 = con.prepareStatement(sql1);
 				pst1.setString(1, venta.getNumVenta());
@@ -62,7 +62,7 @@ public class MySQLVentaDAO implements VentaDAO
 			 */
 			String sql2 = "update tb_producto set stock_act = stock_act - ? where cod_prod = ? and stock_act - ? >= 0;";
 			
-			for(CarritoDTO c : detalleVenta)
+			for(CarritoDTO c : venta.getDetalle())
 			{
 				pst2 = con.prepareStatement(sql2);
 				pst2.setInt(1, c.getCantidad());
@@ -242,15 +242,4 @@ public class MySQLVentaDAO implements VentaDAO
 		return ventas;
 	}
 }
-
-
-
-
-
-
-
-
-
-
-
 

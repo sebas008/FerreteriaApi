@@ -3,7 +3,6 @@ package edu.cibertec.services;
 import java.util.ArrayList;
 
 import edu.cibertec.dao.DAOFactory;
-import edu.cibertec.dto.CarritoDTO;
 import edu.cibertec.dto.VentaDTO;
 import edu.cibertec.interfaces.VentaDAO;
 
@@ -13,9 +12,9 @@ public class VentaService implements VentaDAO
 	VentaDAO dao = fabrica.getVentaDAO();
 	
 	@Override
-	public int transaccion(VentaDTO venta, ArrayList<CarritoDTO> detalleVenta) 
+	public int transaccion(VentaDTO venta) 
 	{
-		return dao.transaccion(venta, detalleVenta);
+		return dao.transaccion(venta);
 	}
 	
 	@Override

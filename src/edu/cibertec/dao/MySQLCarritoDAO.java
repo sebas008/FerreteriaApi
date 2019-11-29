@@ -14,7 +14,7 @@ import edu.cibertec.utils.MySQLConexion;
 public class MySQLCarritoDAO implements CarritoDAO
 {
 	@Override
-	public ArrayList<CarritoDTO> listarXcliente(String codigo) 
+	public ArrayList<CarritoDTO> listarXcliente(String cliente) 
 	{
 		ArrayList<CarritoDTO> listado = new ArrayList<CarritoDTO>();
 		Connection con = null;
@@ -26,7 +26,7 @@ public class MySQLCarritoDAO implements CarritoDAO
 			con = MySQLConexion.getConexion();
 			String sql = "{call sp_historial(?)}";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, codigo);
+			pst.setString(1, cliente);
 			rs = pst.executeQuery();
 			while(rs.next())
 			{
@@ -65,7 +65,7 @@ public class MySQLCarritoDAO implements CarritoDAO
 	}
 	
 	@Override
-	public ArrayList<CarritoDTO> listarXclienteXventa(String codigo, String venta)
+	public ArrayList<CarritoDTO> listarXclienteXventa(String cliente, String venta)
 	{
 		ArrayList<CarritoDTO> listado = new ArrayList<CarritoDTO>();
 		Connection con = null;
@@ -77,7 +77,7 @@ public class MySQLCarritoDAO implements CarritoDAO
 			con = MySQLConexion.getConexion();
 			String sql = "{call sp_historial_x_venta(?, ?)}";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, codigo);
+			pst.setString(1, cliente);
 			pst.setString(2, venta);
 			rs = pst.executeQuery();
 			while(rs.next())
@@ -117,7 +117,7 @@ public class MySQLCarritoDAO implements CarritoDAO
 	}
 
 	@Override
-	public ArrayList<CarritoDTO> listarXfecha(String codigo, String fecha) 
+	public ArrayList<CarritoDTO> listarXfecha(String cliente, String fecha) 
 	{
 		ArrayList<CarritoDTO> listado = new ArrayList<CarritoDTO>();
 		Connection con = null;
@@ -129,7 +129,7 @@ public class MySQLCarritoDAO implements CarritoDAO
 			con = MySQLConexion.getConexion();
 			String sql = "{call sp_historial_fecha(?, ?)}";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, codigo);
+			pst.setString(1, cliente);
 			pst.setString(2, fecha);
 			rs = pst.executeQuery();
 			while(rs.next())
@@ -169,7 +169,7 @@ public class MySQLCarritoDAO implements CarritoDAO
 	}
 
 	@Override
-	public ArrayList<CarritoDTO> listarUltimaVenta(String numVenta, String codUsuario) 
+	public ArrayList<CarritoDTO> listarUltimaVenta(String venta, String cliente) 
 	{
 		ArrayList<CarritoDTO> listado = new ArrayList<CarritoDTO>();
 		Connection con = null;
@@ -181,8 +181,8 @@ public class MySQLCarritoDAO implements CarritoDAO
 			con = MySQLConexion.getConexion();
 			String sql = "{call sp_ultima_venta(?, ?)}";
 			pst = con.prepareStatement(sql);
-			pst.setString(1, numVenta);
-			pst.setString(2, codUsuario);
+			pst.setString(1, venta);
+			pst.setString(2, cliente);
 			rs = pst.executeQuery();
 			while(rs.next())
 			{

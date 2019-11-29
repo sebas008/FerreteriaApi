@@ -18,20 +18,20 @@ public class CarritoService implements CarritoDAO
 	}
 	
 	@Override
-	public ArrayList<CarritoDTO> listarXclienteXventa(String codigo, String venta)
+	public ArrayList<CarritoDTO> listarXclienteXventa(String cliente, String venta)
 	{
-		return dao.listarXclienteXventa(codigo, venta);
+		return dao.listarXclienteXventa(cliente, venta);
 	}
 
 	@Override
-	public ArrayList<CarritoDTO> listarXfecha(String codigo, String fecha) 
+	public ArrayList<CarritoDTO> listarXfecha(String cliente, String fecha) 
 	{
-		return dao.listarXfecha(codigo, fecha);
+		return dao.listarXfecha(cliente, fecha);
 	}
 
 	@Override
-	public ArrayList<CarritoDTO> listarUltimaVenta(String numVenta, String codUsuario) 
+	public ArrayList<CarritoDTO> listarUltimaVenta(String venta, String cliente) 
 	{
-		return dao.listarUltimaVenta(numVenta, codUsuario);
+		return dao.listarUltimaVenta(venta, cliente);
 	}
 }
