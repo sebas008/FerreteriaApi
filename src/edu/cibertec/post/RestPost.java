@@ -51,20 +51,6 @@ public class RestPost
 		}
 	}
 	
-	/*
-	 * {
-		"codigo":"C002",
-		"nombre":"Brandon",
-		"apellido":"Sanchez",
-		"email":"gomez@gmail.com",
-		"clave":"123",
-		"codDistrito":"D002",
-		"direccion":"Av. Vaeony",
-		"telefono":"967886798",
-		"dni":"107989567"
-		}
-	 */
-	
 	// http://localhost:8080/ApiFerreteriaSaravia/tipopost/actualizarProducto
 	@POST
 	@Path("/actualizarProducto")
@@ -81,17 +67,5 @@ public class RestPost
 			System.out.println(e.getMessage());
 		}
 	}
-	
-	/*
-	 * {
-		"codigo":"P082",
-		"codCategoria":"C001",
-		"descripcion":"Producto Random",
-		"marca":"interesante",
-		"uniMed":"unidad",
-		"stockAct":100,
-		"stockMin":1,
-		"precio":99.99
-		}
-	 */
+
 }

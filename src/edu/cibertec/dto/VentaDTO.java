@@ -5,8 +5,15 @@ import java.util.ArrayList;
 public class VentaDTO
 {
 	String numVenta, codCliente, fecha;
+	
+	/*
+	 * Adicionales
+	 */
 	ArrayList<CarritoDTO> detalle;
 
+	/*
+	 * Get y Set
+	 */
 	public String getNumVenta()
 	{
 		return numVenta;

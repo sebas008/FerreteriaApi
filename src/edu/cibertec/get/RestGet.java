@@ -22,24 +22,6 @@ public class RestGet
 {
 	// http:localhost:puerto/proyecto/path_clase/path_servicio
 	
-	// http://localhost:8080/ApiFerreteriaSaravia/tipoget/login/{email}/{clave}
-	@GET
-	@Path("/login/{email}/{clave}")
-	@Produces(MediaType.APPLICATION_JSON)
-	public UsuarioDTO login(@PathParam("email") String email, @PathParam("clave") String clave)
-	{
-		try
-		{
-			UsuarioDTO u = new UsuarioService().login(email, clave);
-			return u;
-		}
-		catch(Exception e)
-		{
-			System.out.println(e.getMessage());
-		}
-		return null;
-	}
-	
 	// http://localhost:8080/ApiFerreteriaSaravia/tipoget/historialXcliente/C001
 	@GET
 	@Path("/historialXcliente/{codigo}")
