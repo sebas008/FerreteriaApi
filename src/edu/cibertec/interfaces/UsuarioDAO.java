@@ -17,4 +17,6 @@ public interface UsuarioDAO
 	public int actualizar(UsuarioDTO u);
 	
 	public String ultimoCodUsuario();
+	
+	public ArrayList<UsuarioDTO> usuariosXproducto(String producto);
 }

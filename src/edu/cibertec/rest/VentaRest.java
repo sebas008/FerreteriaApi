@@ -10,7 +10,9 @@ import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
+import edu.cibertec.dto.UsuarioDTO;
 import edu.cibertec.dto.VentaDTO;
+import edu.cibertec.services.UsuarioService;
 import edu.cibertec.services.VentaService;
 
 @Path("/ventaRest")
@@ -54,16 +56,15 @@ public class VentaRest
 		}
 	}
 
-	// http://localhost:8080/ApiFerreteriaSaravia/ventaRest/ventasXusuario
-	@POST
-	@Path("/ventasXUsuario")
-	@Consumes(MediaType.TEXT_PLAIN)
+	// http://localhost:8080/ApiFerreteriaSaravia/ventaRest/ventasXUsuario
+	@GET
+	@Path("/ventasXUsuario/{cliente}")
 	@Produces(MediaType.APPLICATION_JSON)
-	public VentaDTO[] ventasXusuario(String codigoU)
+	public VentaDTO[] ventasXusuario(@PathParam("cliente") String cliente)
 	{
 		try
 		{
-			ArrayList<VentaDTO> ventas = new VentaService().ventasXusuario(codigoU);
+			ArrayList<VentaDTO> ventas = new VentaService().ventasXusuario(cliente);
 			return ventas.toArray(new VentaDTO[] {});
 		}
 		catch(Exception e)

@@ -91,6 +91,7 @@ public class MySQLUsuarioDAO implements UsuarioDAO
 				u.setDireccion(rs.getString(7));
 				u.setTelefono(rs.getString(8));
 				u.setDni(rs.getString(9));
+				u.setCliente(rs.getBoolean(10));
 			}
 		}
 		catch(Exception e)
@@ -114,7 +115,7 @@ public class MySQLUsuarioDAO implements UsuarioDAO
 	}
 
 	@Override
-	public int registrar(UsuarioDTO u) 
+	public int registrar(UsuarioDTO u)
 	{
 		int rs = 0;
 		Connection con = null;
@@ -275,8 +276,55 @@ public class MySQLUsuarioDAO implements UsuarioDAO
 				u.setDireccion(rs.getString(7));
 				u.setTelefono(rs.getString(8));
 				u.setDni(rs.getString(9));
-				u.setAdministrador(rs.getBoolean(10));
+				u.setCliente(rs.getBoolean(10));
 				u.setTotalComprado(rs.getDouble(11));
+				
+				usuarios.add(u);
+			}
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+		}
+		finally
+		{
+			try
+			{
+				if(con != null) con.close();
+				if(pst != null) pst.close();
+			}
+			catch(Exception e)
+			{
+				System.out.println("Error al cerrar");
+			}
+		}
+		
+		return usuarios;
+	}
+
+	@Override
+	public ArrayList<UsuarioDTO> usuariosXproducto(String producto)
+	{
+		ArrayList<UsuarioDTO> usuarios = new ArrayList<UsuarioDTO>();
+		Connection con = null;
+		PreparedStatement pst = null;
+		ResultSet rs = null;
+		
+		try
+		{
+			con = MySQLConexion.getConexion();
+			String sql = "{call sp_clientes_x_producto(?)}";
+			pst = con.prepareStatement(sql);
+			pst.setString(1, producto);
+			
+			rs = pst.executeQuery();
+			while(rs.next())
+			{
+				UsuarioDTO u = new UsuarioDTO();
+				u.setCodigo(rs.getString(1));
+				u.setNombre(rs.getString(2));
+				u.setApellido(rs.getString(3));
+				u.setCantidadComprado(rs.getInt(4));
 				
 				usuarios.add(u);
 			}

@@ -6,6 +6,7 @@ import javax.ws.rs.Consumes;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
+import javax.ws.rs.PathParam;
 import javax.ws.rs.Produces;
 import javax.ws.rs.core.MediaType;
 
@@ -95,16 +96,35 @@ public class UsuarioRest
 	@GET
 	@Path("/usuariosConMasCompras")
 	@Produces(MediaType.APPLICATION_JSON)
-	public ArrayList<UsuarioDTO> usuariosConMasCompras()
+	public UsuarioDTO[] usuariosConMasCompras()
 	{
 		try
 		{
-			return new UsuarioService().usuariosConMasCompras();
+			ArrayList<UsuarioDTO> usuarios = new UsuarioService().usuariosConMasCompras();
+			return usuarios.toArray(new UsuarioDTO[] {});
 		}
 		catch(Exception e)
 		{
 			System.out.println(e.getMessage());
 		}
 		return null;
+	}
+
+	// http://localhost:8080/ApiFerreteriaSaravia/usuarioRest/clientesXproducto
+	@GET
+	@Path("/clientesXproducto/{producto}")
+	@Produces(MediaType.APPLICATION_JSON)
+	public UsuarioDTO[] clientesXproducto(@PathParam("producto") String producto)
+	{
+		try
+		{
+			ArrayList<UsuarioDTO> usuarios = new UsuarioService().usuariosXproducto(producto);
+			return usuarios.toArray(new UsuarioDTO[] {});
+		}
+		catch(Exception e)
+		{
+			System.out.println(e.getMessage());
+			return null;
+		}
 	}
 }

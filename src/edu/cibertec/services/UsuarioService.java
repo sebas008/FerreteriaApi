@@ -47,4 +47,10 @@ public class UsuarioService implements UsuarioDAO
 	{
 		return dao.usuariosConMasCompras();
 	}
+
+	@Override
+	public ArrayList<UsuarioDTO> usuariosXproducto(String producto)
+	{
+		return dao.usuariosXproducto(producto);
+	}
 }

@@ -15,7 +15,7 @@ CREATE TABLE tb_usuario
     direccion		varchar(60) not null,
     telefono		char(9) not null ,
     DNI				char(8) not null,
-    administrador   bool default false
+    esCliente   	bool default true
 );
 
 CREATE TABLE tb_distrito
@@ -198,15 +198,16 @@ insert into tb_distrito values('D014', 'La Victoria');
 insert into tb_distrito values('D015', 'Lince');
 insert into tb_distrito values('D016', 'S.J.L');
 
-insert into tb_usuario values('C001', 'Jose', 'Damaso', 'profe@gmail.com', 'poo', 'D001', 'Av. POO', '927364332', '12645345', false);
 
+insert into tb_usuario values('C000', 'Administrador', '', 'admin@gmail.com', 'admin', 'D001', 'Av. admin', '999999999', '18675901', false);
+insert into tb_usuario values('C001', 'Jose', 'Damaso', 'profe@gmail.com', 'poo', 'D001', 'Av. POO', '927364332', '12645345', true);
 
 
 -- ACCESO DE UN CLIENTE
 DELIMITER $$
 create procedure sp_accesoUsuario(usr varchar(55), pas varchar(30))
 begin
-	select cod_usu, nombre, apellido, email, clave, cod_dis, direccion, telefono, DNI from tb_usuario 
+	select cod_usu, nombre, apellido, email, clave, cod_dis, direccion, telefono, DNI, esCliente from tb_usuario 
     where email = usr and clave = pas;
 end
 $$ DELIMITER ;
@@ -261,7 +262,7 @@ end
 $$ DELIMITER ;
 
 
--- BUSCAR PRODUCTO POR DESCRIPCION (EJERICICIO AJAX)
+-- BUSCAR PRODUCTO POR DESCRIPCION
 DELIMITER $$
 create procedure sp_buscar_productoXdesc(filtro varchar(50))
 begin
@@ -282,6 +283,19 @@ end
 $$ DELIMITER ;
 
 
+DELIMITER $$
+create procedure sp_clientes_x_producto(producto char(4))
+begin
+    select u.cod_usu, u.nombre, u.apellido, sum(dv.cant_prod) as cantidadComprado from tb_usuario u 
+    inner join tb_ventas v on v.cod_usu = u.cod_usu
+    inner join tb_detalle_venta dv on dv.num_venta = v.num_venta
+    inner join tb_producto p on dv.cod_prod = p.cod_prod
+    where p.cod_prod = producto
+    group by u.cod_usu, u.nombre, u.apellido;
+end
+$$ DELIMITER ;
+
+
 -- LISTADO DE CLIENTES QUE COMPRARON MAS
 DELIMITER $$
 create procedure sp_clientes_mas_compra()
@@ -290,7 +304,8 @@ begin
     inner join tb_ventas v on v.cod_usu = u.cod_usu
     inner join tb_detalle_venta dv on dv.num_venta = v.num_venta
     group by u.cod_usu
-    order by total_comprado desc;
+    order by total_comprado desc
+    LIMIT 5;
 end
 $$ DELIMITER ;
 
